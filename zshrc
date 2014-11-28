@@ -34,11 +34,27 @@ RPROMPT='[%~]'
 setopt transient_rprompt
 setopt prompt_subst
 
+# 単語の区切り設定
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars " /=;@:{},|"
+zstyle ':zle:*' word-style unspecified
+
+# cdr
+autoload -Uz add-zsh-hook
+autoload -Uz chpwd_recent_dirs cdr
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-max 200
+zstyle ':chpwd:*' recent-dirs-default true
+
 # lsコマンド時、自動で色がつく(ls -Gのようなもの？)
 export CLICOLOR=true
 export LSCOLORS=exfxcxdxbxegedabagacad
 export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
+
+# beep音を鳴らさない
+setopt NO_BEEP
 
 # for Gnu source-highlight
 export LESS='-R'
